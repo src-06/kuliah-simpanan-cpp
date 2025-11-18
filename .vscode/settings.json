@@ -1,0 +1,8 @@
+{
+  "files.associations": {
+    "*.blade.php": "php",
+    "*.css": "tailwindcss",
+    "ostream": "cpp",
+    "iomanip": "cpp"
+  }
+}

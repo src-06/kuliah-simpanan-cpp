@@ -1,0 +1,15 @@
+Toko celuler just4u
+=====================
+input:
+Merek handpone:
+Tipe handpone:
+Harga
+Jumlah Beli
+=====================
+Output:
+Jumlah bayar:
+PPN(10%):
+Total bayar:
+=====================
+Yang bayar: <input>
+Yang kembali: <output>

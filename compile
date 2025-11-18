@@ -1,0 +1,53 @@
+#!/usr/bin/bash
+
+clear
+
+SOURCE_FILE="$1"
+SOURCE_FILE_BASE="$(basename $SOURCE_FILE)"
+OUTPUT_NAME="${SOURCE_FILE%.*}"
+OUTPUT_NAME_BASE="$(basename $OUTPUT_NAME)"
+COMPILER="g++"
+
+if [ -z "$SOURCE_FILE" ]; then
+  echo "Belum ada file yang diinputkan"
+  echo "Contoh: \"$0 main.cpp\""
+  exit 1
+fi
+
+if [ ! -f "$SOURCE_FILE" ]; then
+  echo "File \"$SOURCE_FILE_BASE\" tidak ditemukan!"
+  exit 1
+fi
+
+echo "Memulai compile file \"$SOURCE_FILE_BASE\""
+
+$COMPILER "$SOURCE_FILE" -o "$OUTPUT_NAME" &
+while_compile=$!
+
+loading=('.    ' '..   ' '...  ' '.... ' '.....' ' ....' '  ...' '   ..' '    .' '     ')
+i=0
+
+while kill -0 $while_compile 2>/dev/null; do
+  printf "\rCompiling${loading[$i]}"
+  i=$((($i + 1) % ${#loading[@]}))
+  sleep 0.25
+done
+
+wait $while_compile
+
+if [ $? -eq 0 ]; then
+  echo -e "\n\nYeay! \"$SOURCE_FILE_BASE\" berhasil di-compile jadi \"$OUTPUT_NAME_BASE\"!"
+  echo "Sekarang sedang menjalankan: ./$OUTPUT_NAME_BASE"
+  clear
+  ./"$OUTPUT_NAME"
+  rm -rf "$OUTPUT_NAME"
+
+else
+  echo "Terjadi kesalahan saat compile \"$SOURCE_FILE_BASE\"! Coba cek error diatas ya..."
+  exit 1
+fi
+
+VSCCPPTOOLS="/home/leo/.cache/vscode-cpptools"
+if [ ! -z "$VSCCPPTOOLS" ]; then
+  rm -rf "$VSCCPPTOOLS"
+fi

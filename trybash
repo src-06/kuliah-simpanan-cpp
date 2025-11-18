@@ -1,0 +1,104 @@
+#!/usr/bin/bash
+
+clear
+
+OPTION=""
+HAS_OPTION=0
+SERVICES=()
+SERVICES_TEMP=()
+SERVICES_LIST=("a" "b" "c")
+HAS_SERVICES=0
+
+help() {
+  echo
+  echo "USAGE"
+  echo "  $0 --start a                # To start services"
+  echo "  $0 --restart a              # To restart services"
+  echo "  $0 --stop a                 # To stop services"
+  echo "  $0 --enable a               # To enable services"
+  echo
+  echo "SERVICES"
+  for srvl in "${SERVICES_LIST[@]}"; do
+    echo "  $srvl"
+  done
+  echo
+  echo "OPTIONS"
+  echo "  --start   -s"
+  echo "  --restart -r"
+  echo "  --stop    -p"
+  echo "  --enable  -e"
+  echo "  --help    -h"
+  echo
+}
+
+for arg in "$@"; do
+  case "$arg" in
+    --start|-s)
+      OPTION="start"
+      HAS_OPTION+=1
+      shift
+    ;;
+    --restart|-r)
+      OPTION="restart"
+      HAS_OPTION+=1
+      shift
+    ;;
+    --stop|-p)
+      OPTION="stop"
+      HAS_OPTION+=1
+      shift
+    ;;
+    --enable|-e)
+      OPTION="enable"
+      HAS_OPTION+=1
+      shift
+    ;;
+    --help|-h)
+      help
+      exit 0
+    ;;
+    --*|-*)
+      echo -e "\033[1m\033[31mError: \"$arg\" is unknown option!!!\033[0m"
+      exit 1
+    ;;
+    *)
+      SERVICES_TEMP+=("$arg")
+      HAS_SERVICES=1
+      shift
+    ;;
+  esac
+done
+
+if [ $HAS_OPTION -eq 1 ]; then
+  SERVICES=("${SERVICES_TEMP[@]}")
+
+  IS_SERVICES=true
+  for srv in "${SERVICES[@]}"; do
+    for srvl in "${SERVICES_LIST[@]}"; do
+      if [[ "$srv" == "$srvl" ]]; then
+        IS_SERVICES=false
+      fi
+    done
+  done
+
+  if $IS_SERVICES; then
+    echo -e "\033[1m\033[31mError: Service \"$srv\" not match!!!\033[0m"
+    exit 1
+  fi
+
+elif [ $HAS_OPTION -eq 0 ] && [ $HAS_SERVICES -eq 1 ]; then
+  echo -e "\033[1m\033[31mError: Can't running services because the option not match!!!\033[0m"
+  exit 1
+elif [ $HAS_OPTION -eq 0 ] && [ $HAS_SERVICES -eq 0 ]; then
+  echo -e "\033[1m\033[31mError: Noting to do!!!\033[0m"
+  exit 1
+else
+  echo -e "\033[1m\033[31mError: Only use one option!!!\033[0m"
+  exit 1
+fi
+
+echo "$OPTION"
+
+for srv in "${SERVICES[@]}"; do
+  echo "- ${srv}"
+done
