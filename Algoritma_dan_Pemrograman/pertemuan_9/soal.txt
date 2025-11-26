@@ -1,0 +1,10 @@
+Buatkan sebuah array untuk list nama distro linux dan gunakan for loop untuk mendapatkan hasil yang berurutan kebawah. Minimal ada 10 nama distro.
+
+Contoh hasil:
+-------------------------
+1. A Linux
+2. A OS
+3. A
+dst ...
+-------------------------
+
