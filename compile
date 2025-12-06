@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/sh
 
 clear
 
@@ -41,7 +41,6 @@ if [ $? -eq 0 ]; then
   clear
   ./"$OUTPUT_NAME"
   rm -rf "$OUTPUT_NAME"
-
 else
   echo "Terjadi kesalahan saat compile \"$SOURCE_FILE_BASE\"! Coba cek error diatas ya..."
   exit 1

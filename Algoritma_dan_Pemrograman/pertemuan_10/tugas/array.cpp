@@ -1,38 +1,50 @@
 #include <cstdlib>
 #include <iostream>
+#include <iomanip>
 #include <string>
 
 using namespace std;
+
+#ifdef _WIN32
+  #define CLEAR system("cls");
+#else
+  #define CLEAR system("clear");
+#endif
 
 void garis() {
   cout << "-----------------------------------------------------------" << endl;
 }
 
+void garis2() {
+  cout << "===========================================================" << endl;
+}
+
 void judul() {
-  garis();
+  garis2();
   cout << "                     TOKO SEMBAKO" << endl;
-  garis();
+  garis2();
 }
 
 void trms() {
-  garis();
+  garis2();
   cout << "                     TERIMAKASIH" << endl;
-  garis();
+  garis2();
 }
 
 int ttlBlnj(int jmlbl, int hrg) {
-  return jmlbl*hrg;
+  return jmlbl * hrg;
 }
 
 int main() {
-  string nm,nmbrg,bns;
-  int jml,hrg,plh,ttl,ub,uk;
+  string nm, nmbrg, bns;
+  int jml, hrg, plh, ttl, ub, uk;
   char lagi;
+
   string barang[5] = {
     "Piring",
     "Sendok",
     "Garpu",
-    "Tubler",
+    "Tumbler (TUKU)",
     "Wajan"
   };
 
@@ -40,15 +52,27 @@ int main() {
     10000,
     5000,
     6000,
-    35000,
+    350000,
     45000
   };
 
 awal:
+  CLEAR;
+
   judul();
 
-  for (int i = 0; i < 5; i++)
-    cout << i + 1 << ". " << barang[i] << endl;
+  cout << left << setw(4) << "No."
+      << setw(14) << "Nama Barang"
+      << right << setw(11) << "" << "Harga Barang"
+      << endl;
+  garis();
+
+  for (int i = 0; i < 5; i++) {
+    cout << left << setw(4) << i + 1
+        << left << setw(14) << barang[i]
+        << right << setw(14) << "Rp." << harga[i]
+        << endl;
+  }
 
   garis();
 
@@ -58,27 +82,40 @@ awal:
 
   garis();
 
-  system("clear");
+  hrg = harga[plh-1];
+  ttl = ttlBlnj(jml, hrg);
+
+  bns = ttl >= 500000 ? "Payung"
+    : ttl >= 300000 ? "Gelas"
+    : "Maaf anda tidak mendapatkan bonus";
+
+  CLEAR;
 
   judul();
 
-  cout << "Nama pembeli:" << nm << endl;
-  cout << "Barang dipilih:" << nmbrg << endl;
-  cout << "Harga barang:" << hrg << endl;
+  cout << "Nama pembeli   : " << nm << endl;
+  cout << "Barang dipilih : " << barang[plh-1] << endl;
+  cout << "Harga barang   : " << hrg << endl;
 
   garis();
 
-  cout << "Bonus:" << bns << endl;
+  cout << "Bonus          : " << bns << endl;
 
   garis();
 
-  cout << "Total harga: Rp." << ttl << endl;
+  cout << "Total harga    : Rp." << ttl << endl;
 
   garis();
 
-  cout << "Uang bayar: Rp."; cin >> ub;
+  cout << "Uang bayar     : Rp."; cin >> ub;
   uk = ub - ttl;
-  cout << "Uang kembali: Rp." << uk << endl;
+  cout << "Uang kembali   : Rp." << uk << endl;
 
   trms();
+
+  cout << "\nIngin beli lagi? [Y/T]: "; cin >> lagi;
+
+  if (tolower(lagi) == 'y') goto awal;
+
+  return 0;
 }
