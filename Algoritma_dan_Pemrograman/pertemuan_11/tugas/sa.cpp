@@ -6,7 +6,7 @@ using namespace std;
 
 // Alternatif clear and pause untuk lintas sistem operasi
 inline void clear() { cout << "\033[2J\033[H"; }
-inline void pause() { cout << "Tekan tombol Enter untuk melanjutkan..."; cin.ignore(numeric_limits<streamsize>::max(), '\n'); cin.get(); }
+inline void pause() { cout << "Tekan tombol Enter untuk melanjutkan..."; cin.get(); cin.ignore(numeric_limits<streamsize>::max(), '\n'); }
 
 void garis() {
   cout << "----------------------------------------------------------------------------------------------\n";
@@ -29,6 +29,8 @@ int main() {
   string nama_penyewa, tanggal_sewa;
   int jumlah_data;
 
+  awal:
+  clear();
   judul();
 
   cout << "Tanggal sewa         : "; getline(cin, tanggal_sewa);
@@ -122,6 +124,10 @@ int main() {
   cout << "Jumlah bayar   : Rp." << total_bayar - potongan << endl;
 
   garis();
+
+  char lagi;
+  cout << "Ingin input data lagi? [Y/T] "; cin >> lagi;
+  if (tolower(lagi) == 'y') goto awal;
 
   pause();
   return 0;
