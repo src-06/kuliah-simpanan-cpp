@@ -1,0 +1,13 @@
+
+Buatkan list data penjualan menggunakan array, struct, function, forloop. Dengan menggunakan struct, kita dapat menyimpan informasi tentang setiap item yang terjual, seperti nama pembeli, nama barang, dan harga barang. Kemudian, kita dapat menggunakan array untuk menyimpan semua item yang terjual. Untuk menampilkan data penjualan, kita dapat menggunakan function dan forloop.
+
+                 TOKO SEJAHTERA NUSANTARA
+------------------------------------------------------------
+No  Nama Pembeli   Barang              Harga Barang
+------------------------------------------------------------
+1   Joko           Buku                10000
+2   Firya          Pensil              5000
+3   Delar          Pulpen              7000
+4   Sulai          Penghapus           3000
+5   Kerta          Penggaris           4000
+------------------------------------------------------------
