@@ -6,7 +6,7 @@ SOURCE_FILE="$1"
 SOURCE_FILE_BASE="$(basename $SOURCE_FILE)"
 OUTPUT_NAME="${SOURCE_FILE%.*}"
 OUTPUT_NAME_BASE="$(basename $OUTPUT_NAME)"
-COMPILER="g++"
+COMPILER="c++"
 
 if [ -z "$SOURCE_FILE" ]; then
   echo "Belum ada file yang diinputkan"
